@@ -22,8 +22,8 @@ var cors = require('cors');
 //NOUVEAU
 //---------------------------
 
-var facture = require('./models/facture.js');
-var user = require('./models/user.js');
+var facture = require('../models/facture.js');
+var user = require('../models/user.js');
 
 router.use(bodyParser.json());
 router.use(cors());
