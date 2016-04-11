@@ -56,6 +56,19 @@ router.options('/signup', cors()); // enable pre-flight request for signup reque
         failureFlash: true // allow flash messages
     }));
 
+router.get('/login:id', function (req, res) {
+    var id = req.params.id;
+    user.find({'email':id}).exec(function(err,docs){
+        if (err) {
+            res.send('Une erreur s\'est produite');
+        }else{
+            res.json(docs);
+            console.log(docs);
+        }
+    });
+
+});
+
     router.post('/signup', passport.authenticate('local-signup', {
         successRedirect: '/', // redirect to the secure profile section
         failureRedirect: '/', // redirect back to the signup page if there is an error
