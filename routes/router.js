@@ -22,8 +22,8 @@ var cors = require('cors');
 //NOUVEAU
 //---------------------------
 
-var facture = require('./models/facture.js');
-var user = require('./models/user.js');
+var facture = require('../models/facture.js');
+var user = require('../models/user.js');
 
 router.use(bodyParser.json());
 router.use(cors());
@@ -42,7 +42,7 @@ router.use(passport.session()); // persistent login sessions
 router.use(flash()); // use connect-flash for flash messages stored in session
 
 
-require('./config/passport')(passport); // load our routes and pass in our app and fully configured passport
+require('../config/passport')(passport); // load our routes and pass in our app and fully configured passport
 
     // process the login form
     router.post('/login', passport.authenticate('local-login', {
