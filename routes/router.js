@@ -44,6 +44,8 @@ router.use(flash()); // use connect-flash for flash messages stored in session
 
 require('../config/passport')(passport); // load our routes and pass in our app and fully configured passport
 
+
+router.options('/', cors()); // enable pre-flight request for login request
 router.options('/login', cors()); // enable pre-flight request for login request
 router.options('/signup', cors()); // enable pre-flight request for signup request
 
