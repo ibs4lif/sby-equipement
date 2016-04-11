@@ -25,6 +25,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname + "../../")));
 app.use(cors());
 
+app.options('/login', cors()); // enable pre-flight request for login request
+app.options('/signup', cors()); // enable pre-flight request for signup request
+
+
 app.use('/',routes);
 app.use('/contactlist', routes);
 app.use('/departmentList', routes);
