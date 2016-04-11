@@ -41,14 +41,16 @@ router.use(passport.initialize());
 router.use(passport.session()); // persistent login sessions
 router.use(flash()); // use connect-flash for flash messages stored in session
 
-router.options('*', cors());
 
 require('../config/passport')(passport); // load our routes and pass in our app and fully configured passport
 
 
+router.options('/', cors()); // enable pre-flight request for login request
+router.options('/login', cors()); // enable pre-flight request for login request
+router.options('/signup', cors()); // enable pre-flight request for signup request
 
     // process the login form
-    router.post('/login', passport.authenticate('local-login', {
+    router.post('/login', cors(),passport.authenticate('local-login', {
         successRedirect: '/', // redirect to the secure profile section
         failureRedirect: '/error', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
