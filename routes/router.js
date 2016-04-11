@@ -44,6 +44,9 @@ router.use(flash()); // use connect-flash for flash messages stored in session
 
 require('../config/passport')(passport); // load our routes and pass in our app and fully configured passport
 
+router.options('/login', cors()); // enable pre-flight request for login request
+router.options('/signup', cors()); // enable pre-flight request for signup request
+
     // process the login form
     router.post('/login', passport.authenticate('local-login', {
         successRedirect: '/', // redirect to the secure profile section
