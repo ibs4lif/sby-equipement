@@ -51,8 +51,8 @@ router.options('/signup', cors()); // enable pre-flight request for signup reque
 
     // process the login form
     router.post('/login', cors(),passport.authenticate('local-login', {
-        successRedirect: '/', // redirect to the secure profile section
-        failureRedirect: '/error', // redirect back to the signup page if there is an error
+        // successRedirect: '/', // redirect to the secure profile section
+        // failureRedirect: '/error', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
 
