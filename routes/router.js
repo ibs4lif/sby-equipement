@@ -58,7 +58,7 @@ router.options('/signup', cors()); // enable pre-flight request for signup reque
 
 router.get('/login:id', function (req, res) {
     var id = req.params.id;
-    user.find({'email':id}).exec(function(err,docs){
+    user.find({'local.email':id}).exec(function(err,docs){
         if (err) {
             res.send('Une erreur s\'est produite');
         }else{
