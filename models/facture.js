@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var FactueSchema = new Schema({
+	camioneur:String,
 	magasin:String,
 	remorque:String,
 	route:String,

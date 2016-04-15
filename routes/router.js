@@ -140,6 +140,7 @@ router.get('/profile:id', function (req, res) {
 router.post('/facture/',function(req,res){
     newFacture = facture();
     
+    newFacture.camioneur = req.body.camioneur;
     newFacture.magasin = req.body.magasin;
     newFacture.remorque = req.body.remorque;
     newFacture.route = req.body.route;
