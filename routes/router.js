@@ -113,7 +113,7 @@ router.get('/facture',cors(), function (req, res) {
 
 router.get('/facturemagasin:id', function (req, res) {
     var id = req.params.id;
-    facture.find({'magasin':id}).exec(function(err,docs){
+    facture.find({'magasin':id},{'_id':false}).sort({'reference': -1 }).exec(function(err,docs){
         if (err) {
             res.send('Une erreur s\'est produite');
         }else{
@@ -125,7 +125,7 @@ router.get('/facturemagasin:id', function (req, res) {
 });
 router.get('/facturecamionneur:id', function (req, res) {
     var id = req.params.id;
-    facture.find({'camionneur':id}).exec(function(err,docs){
+    facture.find({'camionneur':id},{'_id':false}).sort({'reference': -1 }).exec(function(err,docs){
         if (err) {
             res.send('Une erreur s\'est produite');
         }else{

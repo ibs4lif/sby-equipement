@@ -12,7 +12,7 @@ var FactueSchema = new Schema({
 	date:String,
 	published:{
 		type:Date,
-		default:Date.now()
+		default:new Date
 	}
 });
 
