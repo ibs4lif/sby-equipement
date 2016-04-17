@@ -10,6 +10,10 @@ var FactueSchema = new Schema({
 	reference:String,
 	items:Array,
 	date:String,
+	published:{
+		type:Date,
+		default:Date.now()
+	}
 });
 
 module.exports = mongoose.model('facture',FactueSchema);
