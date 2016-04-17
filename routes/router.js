@@ -111,9 +111,21 @@ router.get('/facture',cors(), function (req, res) {
 
 });
 
-router.get('/facture:id', function (req, res) {
+router.get('/facturemagasin:id', function (req, res) {
     var id = req.params.id;
     facture.find({'magasin':id}).exec(function(err,docs){
+        if (err) {
+            res.send('Une erreur s\'est produite');
+        }else{
+            res.json(docs);
+            console.log(docs);
+        }
+    });
+
+});
+router.get('/facturecamionneur:id', function (req, res) {
+    var id = req.params.id;
+    facture.find({'camionneur':id}).exec(function(err,docs){
         if (err) {
             res.send('Une erreur s\'est produite');
         }else{
@@ -140,7 +152,7 @@ router.get('/profile:id', function (req, res) {
 router.post('/facture/',function(req,res){
     newFacture = facture();
     
-    newFacture.camioneur = req.body.camioneur;
+    newFacture.camionneur = req.body.camionneur;
     newFacture.magasin = req.body.magasin;
     newFacture.remorque = req.body.remorque;
     newFacture.route = req.body.route;
