@@ -6,6 +6,26 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 
+// ==========================================================================================
+//Pour convertir les fichier csv en format json
+// var transform = require('csv-to-json-stream');
+// var fs = require('fs');
+// var writeStream= fs .createWriteStream("myOutput.json");
+// fs.createReadStream('input.csv')
+//   .pipe(transform({
+//     delimiter: '\t',
+//     map: {
+//       'EAN': 0,
+//       'SAP': 1,
+//       'FRANCAIS': 2,
+//       'ENGLISH': 3,
+//     },
+//     skipHeader: true
+//   }))
+//   .pipe(writeStream);
+//   // .pipe(process.stdout);
+// ==========================================================================================
+
 var routes = require('./routes/router');
 // var users = require('./routes/users');
 

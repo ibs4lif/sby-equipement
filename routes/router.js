@@ -24,6 +24,7 @@ var cors = require('cors');
 
 var facture = require('../models/facture.js');
 var user = require('../models/user.js');
+var ean = require('../models/ean.js');
 
 router.use(bodyParser.json());
 router.use(cors());
@@ -79,11 +80,11 @@ router.get('/login:id', function (req, res) {
     //     res.render('profile.ejs', {
     //         user: req.user // get the user out of session and pass to template
     //     });
-    // }); 
+    // });
 
     // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
-    // if user is authenticated in the session, carry on 
+    // if user is authenticated in the session, carry on
     if (req.isAuthenticated()){
         return next();
     }
@@ -101,6 +102,19 @@ function isLoggedIn(req, res, next) {
 router.get('/facture',cors(), function (req, res) {
 
     facture.find({}).exec(function(err,docs){
+        if (err) {
+            res.send('Une erreur s\'est produite');
+        }else{
+            res.json(docs);
+            console.log(docs);
+        }
+    });
+
+});
+
+router.get('/ean:id',cors(), function (req, res) {
+    var id = req.params.id;
+    ean.find({'EAN':id},{'_id':false}).exec(function(err,docs){
         if (err) {
             res.send('Une erreur s\'est produite');
         }else{
@@ -151,7 +165,7 @@ router.get('/profile:id', function (req, res) {
 
 router.post('/facture/',function(req,res){
     newFacture = facture();
-    
+
     newFacture.camionneur = req.body.camionneur;
     newFacture.magasin = req.body.magasin;
     newFacture.remorque = req.body.remorque;
@@ -166,7 +180,7 @@ router.post('/facture/',function(req,res){
             res.send('Une erreur s\'est produite');
         }else{
             res.json(docs);
-            console.log(docs);            
+            console.log(docs);
         }
     });
 
@@ -179,15 +193,3 @@ router.post('/facture/',function(req,res){
 //------------------------------------------------------------------
 
 module.exports = router;
-
-
-
-
-
-
-
-
-
-
-
-
