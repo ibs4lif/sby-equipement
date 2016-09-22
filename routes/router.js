@@ -114,7 +114,8 @@ router.get('/facture',cors(), function (req, res) {
 
 router.get('/ean:id',cors(), function (req, res) {
     var id = req.params.id;
-    ean.find({'EAN':id},{'_id':false}).exec(function(err,docs){
+
+    ean.find({EAN: new RegExp(id, "i")},{'_id':false}).exec(function(err,docs){
         if (err) {
             res.send('Une erreur s\'est produite');
         }else{
