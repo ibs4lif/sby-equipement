@@ -5,6 +5,32 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var okrabyte = require("okrabyte");
+
+// okrabyte.decodeFile("../img/hello_world.png", function(error, data){
+//   console.log(data); // Hello World!
+// });
+var fs = require("fs");
+var buffer = fs.readFileSync("../img/hello_world.png");
+okrabyte.decodeBuffer(buffer, function(error, data){
+  console.log(data); // Hello World!
+});
+
+// var ocr = require('colissimo-ocr');
+// ocr.guessTextFromImage("../img/hello_world.png", function(err, str) {
+//     if (err)
+//         console.log('Error: ' + err);
+//     else
+//         console.log('Text: ' + str);
+// });
+// ==========================================================================================
+
+
+
+
+
+
+// ==========================================================================================
 
 // ==========================================================================================
 //Pour convertir les fichier csv en format json

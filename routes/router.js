@@ -25,6 +25,7 @@ var cors = require('cors');
 var facture = require('../models/facture.js');
 var user = require('../models/user.js');
 var ean = require('../models/ean.js');
+var recuperation = require('../models/recuperation.js');
 
 router.use(bodyParser.json());
 router.use(cors());
@@ -126,6 +127,35 @@ router.get('/ean:id',cors(), function (req, res) {
 
 });
 
+router.get('/recuperation',cors(), function (req, res) {
+
+    recuperation.find({}).exec(function(err,docs){
+        if (err) {
+            res.send('Une erreur s\'est produite');
+        }else{
+            res.json(docs);
+            console.log(docs);
+        }
+    });
+
+});
+
+router.get('/recuperarion:id',cors(), function (req, res) {
+    var id = req.params.id;
+
+    ean.find({EAN: new RegExp(id, "i")},{'_id':false}).exec(function(err,docs){
+        if (err) {
+            res.send('Une erreur s\'est produite');
+        }else{
+            res.json(docs);
+            console.log(docs);
+        }
+    });
+
+});
+
+
+
 router.get('/facturemagasin:id', function (req, res) {
     var id = req.params.id;
     facture.find({'magasin':id},{'_id':false}).sort({'reference': -1 }).exec(function(err,docs){
@@ -187,6 +217,24 @@ router.post('/facture/',function(req,res){
 
 });
 
+router.post('/recuperation/',function(req,res){
+    newRecuperation = recuperation();
+
+    newRecuperation.name = req.body.name;
+    newRecuperation.magasin = req.body.magasin;
+    newRecuperation.open = req.body.open;
+
+
+    newRecuperation.save(function(err,docs){
+        if (err) {
+            res.send('Une erreur s\'est produite');
+        }else{
+            res.json(docs);
+            console.log(docs);
+        }
+    });
+
+});
 
 
 //------------------------------------------------------------------

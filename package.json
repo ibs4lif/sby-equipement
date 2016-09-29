@@ -10,6 +10,7 @@
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "~1.13.2",
     "bootstrap": "~3.1.1",
+    "colissimo-ocr": "^1.0.2",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.3.5",
     "cors": "^2.7.1",
@@ -27,6 +28,7 @@
     "morgan": "~1.6.1",
     "node-persist": "^2.0.2",
     "nodemon": "^1.9.1",
+    "okrabyte": "^0.1.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.3.0"
