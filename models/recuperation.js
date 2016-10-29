@@ -5,6 +5,7 @@ var RecuperationSchema = new Schema({
 	name:String,
 	open:String,
 	magasin:String,
+	articles:[],
 	published:{
 		type:Date,
 		default:new Date

@@ -19,6 +19,7 @@
     "debug": "~2.2.0",
     "express": "~4.13.1",
     "express-session": "^1.13.0",
+    "gridfs-stream": "^1.1.1",
     "jade": "~1.11.0",
     "jquery": "~2.1.1",
     "jsonwebtoken": "^5.7.0",
@@ -31,6 +32,7 @@
     "okrabyte": "^0.1.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "path": "^0.12.7",
     "serve-favicon": "~2.3.0"
   }
 }

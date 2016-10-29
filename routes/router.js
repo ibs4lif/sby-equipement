@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+var path = require('path');
+var Grid = require('gridfs-stream');
+var fs = require('fs');
 //--------------------------
 //**NEW**
 var passport =require('passport');
@@ -10,7 +13,6 @@ var cookieParser = require('cookie-parser');
 //---------------------------
 var bodyParser = require('body-parser');
 var cors = require('cors');
-
 
 //---------------------------
 //NOUVEAU
@@ -31,8 +33,50 @@ router.use(bodyParser.json());
 router.use(cors());
 router.use(cookieParser()); //**NEW**
 
+var imagePath = path.join(__dirname, '../img/test.pdf');
+
 var db = 'mongodb://ibrahima:sarr@ds011168.mlab.com:11168/ballot';
 mongoose.connect(db);
+var conn = mongoose.connection;
+
+Grid.mongo = mongoose.mongo;
+//==========================================
+// Apprendre GridFs
+//https://www.youtube.com/watch?v=EVIGIcm7o2w
+
+// conn.once('open',function(){
+//     console.log('- connection open -');
+//     var gfs = Grid(conn.db);
+
+//     var writestream = gfs.createWriteStream({
+//         filename:'test.pdf'
+//     });
+
+//     fs.createReadStream(imagePath).pipe(writestream);
+
+//     writestream.on('close',function(file){
+//         console.log(file.filename + ' Written to DB');
+//     });
+// });
+
+conn.once('open',function(){
+    console.log('- connection open -');
+    var gfs = Grid(conn.db);
+
+    var fs_write_stream = fs.createWriteStream(path.join(__dirname, '../test/test.pdf'));
+
+     var readstream = gfs.createReadStream({
+         filename:'test.pdf'
+     });
+
+    readstream.pipe(fs_write_stream);
+
+    fs_write_stream.on('close',function(file){
+        console.log('File has been written fully');
+    });
+});
+
+
 
 //------------------------------------------------------------------
 //AUTHENTIFICATION
@@ -129,7 +173,20 @@ router.get('/ean:id',cors(), function (req, res) {
 
 router.get('/recuperation',cors(), function (req, res) {
 
-    recuperation.find({}).exec(function(err,docs){
+    recuperation.find({},{'articles':false}).exec(function(err,docs){
+        if (err) {
+            res.send('Une erreur s\'est produite');
+        }else{
+            res.json(docs);
+            console.log(docs);
+        }
+    });
+
+});
+
+router.get('/openrecuperation',cors(), function (req, res) {
+
+    recuperation.find({open:true},{'articles':false}).exec(function(err,docs){
         if (err) {
             res.send('Une erreur s\'est produite');
         }else{
@@ -223,9 +280,56 @@ router.post('/recuperation/',function(req,res){
     newRecuperation.name = req.body.name;
     newRecuperation.magasin = req.body.magasin;
     newRecuperation.open = req.body.open;
+    newRecuperation.articles = req.body.articles;
 
 
     newRecuperation.save(function(err,docs){
+        if (err) {
+            res.send('Une erreur s\'est produite');
+        }else{
+            res.json(docs);
+            console.log(docs);
+        }
+    });
+
+});
+
+router.put('/recuperation/',function(req,res){
+    // newRecuperation = recuperation();
+
+
+    recuperation.findByIdAndUpdate(req.body.id,
+        {$push:{'articles':
+                {   EAN:req.body.EAN,
+                    SAP:req.body.SAP, 
+                    FRANCAIS:req.body.FRANCAIS,
+                    ENGLISH:req.body.ENGLISH,
+                    quantity:req.body.quantity
+                } }},
+        {safe: true, upsert: true,new : true},function(err,docs){
+        if (err) {
+            res.send('Une erreur s\'est produite');
+        }else{
+            res.json(docs);
+            console.log(docs);
+        }
+    });
+
+});
+
+router.put('/recuperation/articleexist',function(req,res){
+    // newRecuperation = recuperation();
+
+
+    recuperation.findByIdAndUpdate(req.body.id,
+        {$push:{'articles':
+                {   EAN:req.body.EAN,
+                    SAP:req.body.SAP, 
+                    FRANCAIS:req.body.FRANCAIS,
+                    ENGLISH:req.body.ENGLISH,
+                    quantity:req.body.quantity
+                } }},
+        {safe: true, upsert: true,new : true},function(err,docs){
         if (err) {
             res.send('Une erreur s\'est produite');
         }else{
